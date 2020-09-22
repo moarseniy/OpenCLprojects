@@ -87,7 +87,7 @@ int main(void) {
 
 
 
-	for (i = 0; i < SIZE; ++i) 
+	for (int i = 0; i < SIZE; ++i) 
 	{
 		printf("%f + %f = %f\n", A[i], B[i], C[i]);
 	}

@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.18.2)
 
 
-project(OpenCL_CUDAsum LANGUAGES C CUDA)
+project(OpenCL_CUDAsum)     
 
-if(true)
+if(false)
 	#CUDA
 	set_source_files_properties(kernel.cu PROPERTIES LANGUAGE "CUDA")
 	add_executable(OpenCL_CUDAsum kernel.cu)
