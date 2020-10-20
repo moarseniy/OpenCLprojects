@@ -1,7 +1,9 @@
 ﻿
-#include <CL\cl.hpp>
+//#include <CL\cl.h>
+#include </opt/cuda/targets/x86_64-linux/include/CL/cl.h>
 
 #include <stdio.h>
+#include <iostream>
 #include <stdlib.h>
 #include <ctime>
 
@@ -45,13 +47,20 @@ int main(void) {
 	cl_device_id deviceID = NULL;
 	cl_uint retNumDevices;
 	cl_uint retNumPlatforms;
-	cl_int ret = clGetPlatformIDs(1, &platformId, &retNumPlatforms);
+	int ret = clGetPlatformIDs(1, &platformId, &retNumPlatforms);
 	ret = clGetDeviceIDs(platformId, CL_DEVICE_TYPE_GPU, 1, &deviceID, &retNumDevices);
 
-
+	if (ret != CL_SUCCESS)
+   	{
+        	printf("Error: Failed to create a device group!\n");
+        	return EXIT_FAILURE;
+    	}
+    	
 	cl_context context = clCreateContext(NULL, 1, &deviceID, NULL, NULL, &ret);
 
 	cl_command_queue commandQueue = clCreateCommandQueue(context, deviceID, 0, &ret);
+
+
 
 	cl_mem aMemObj = clCreateBuffer(context, CL_MEM_READ_ONLY, SIZE * sizeof(float), NULL, &ret);
 	cl_mem bMemObj = clCreateBuffer(context, CL_MEM_READ_ONLY, SIZE * sizeof(float), NULL, &ret);
@@ -94,7 +103,15 @@ int main(void) {
 
 
 	printf("TIME = %d", end_time - start_time);
-
+	
+	std::cout<<std::endl<<"ret= "<<ret<<std::endl;
+	std::cout<<std::endl<<"platformId= "<<platformId<<std::endl;
+	std::cout<<std::endl<<"deviceID= "<<deviceID<<std::endl;
+	std::cout<<std::endl<<"retNumDevices= "<<retNumDevices<<std::endl;
+	std::cout<<std::endl<<"retNumPlatforms= "<<retNumPlatforms<<std::endl;
+	std::cout<<std::endl<<"context= "<<context<<std::endl;
+	
+	
 	ret = clFlush(commandQueue);
 	ret = clFinish(commandQueue);
 	ret = clReleaseCommandQueue(commandQueue);

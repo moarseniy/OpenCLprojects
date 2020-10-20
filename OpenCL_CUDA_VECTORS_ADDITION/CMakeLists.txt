@@ -1,13 +1,14 @@
 cmake_minimum_required(VERSION 3.18.2)
 
 
-project(OpenCL_CUDAsum)     
+project(OpenCL_CUDAsum C CXX CUDA)     
 
 if(false)
 	#CUDA
-	set_source_files_properties(kernel.cu PROPERTIES LANGUAGE "CUDA")
+	#find_package(REQUIRED CUDA)
+	#set_source_files_properties(kernel.cu PROPERTIES LANGUAGE "CUDA")
 	add_executable(OpenCL_CUDAsum kernel.cu)
-	set_target_properties(OpenCL_CUDAsum PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+	#set_target_properties(OpenCL_CUDAsum PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 else()
 	#OpenCL
 	find_package(OpenCL REQUIRED)
